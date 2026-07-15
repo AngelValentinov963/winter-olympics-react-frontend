@@ -42,7 +42,7 @@ export default function Home() {
           {cards.map((card) => (
             <div
               key={card.title}
-              className="flex flex-col items-center rounded-xl border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md"
+              className="flex flex-col items-center border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md"
             >
               <div className="mb-4 text-5xl" aria-hidden="true">
                 {card.icon}

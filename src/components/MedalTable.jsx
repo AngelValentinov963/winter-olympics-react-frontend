@@ -7,6 +7,8 @@ const medals = [
     { r: 6, c: "Japan", n: "JPN", g: 5, s: 4, b: 6 },
 ];
 
+
+
 export default function MedalTable() {
     return (
         <section className="px-6 py-20 md:px-12">
