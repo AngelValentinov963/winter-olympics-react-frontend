@@ -1,66 +1,83 @@
-import { Link } from "react-router-dom"
-import Footer from "../components/Footer.jsx"
+import { Link } from "react-router-dom";
+import Footer from "../components/Footer.jsx";
+import background from "../assets/image_milano_olympics.avif";
+import Card from "../components/Card";
+import competitionsImg from "../assets/competitions.avif";
+import rankingsImg from "../assets/rankings.avif";
+import statisticsImg from "../assets/statistics.avif";
 
 const cards = [
   {
-    icon: "🏆",
+    image: competitionsImg,
     title: "Competitions",
     text: "View all Winter Olympic competitions and their details.",
     to: "/competitions",
-    cta: "Browse",
   },
   {
-    icon: "🥇",
+    image: rankingsImg,
     title: "Rankings",
     text: "Check the latest athlete rankings and standings.",
     to: "/rankings",
-    cta: "View Rankings",
   },
   {
-    icon: "🌍",
+    image: statisticsImg,
     title: "Statistics",
     text: "Explore medals by country and other Olympic statistics.",
     to: "/statistics",
-    cta: "View Statistics",
   },
-]
+];
 
 export default function Home() {
   return (
     <>
-      <main className="mx-auto max-w-6xl px-6 py-16">
-        <div className="mb-14 text-center">
-          <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-            Winter Olympics Management System
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-            Browse competitions, rankings and medal statistics from the Winter Olympic Games.
-          </p>
-        </div>
+      <div
+        className="relative min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${background})` }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {cards.map((card) => (
-            <div
-              key={card.title}
-              className="flex flex-col items-center border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md"
-            >
-              <div className="mb-4 text-5xl" aria-hidden="true">
-                {card.icon}
-              </div>
-              <h2 className="mb-2 text-xl font-semibold text-card-foreground">{card.title}</h2>
-              <p className="mb-6 leading-relaxed text-muted-foreground">{card.text}</p>
-              <Link
-                to={card.to}
-                className="mt-auto rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-              >
-                {card.cta}
-              </Link>
-            </div>
-          ))}
-        </div>
-      </main>
+        {/* Content */}
+        <main className="relative z-10">
+
+  {/* Hero Section */}
+  <section className="mx-auto flex min-h-[90vh] max-w-6xl items-center px-6">
+    <div className="max-w-2xl">
+      <h1 className="text-5xl font-bold text-white">
+        Winter Olympics Management System
+      </h1>
+
+      <p className="mt-6 text-lg leading-relaxed text-gray-200">
+        Browse competitions, rankings and medal statistics from the Winter Olympic Games.
+      </p>
+    </div>
+  </section>
+
+  {/* Cards Section */}
+  <section className="bg-white py-20">
+    <div className="mx-auto max-w-7xl px-6">
+      <h2 className="mb-10 text-left text-3xl font-bold">
+        Explore
+      </h2>
+
+      <div className="grid gap-8 md:grid-cols-3">
+  {cards.map((card) => (
+    <Card
+      key={card.title}
+      image={card.image}
+      title={card.title}
+      text={card.text}
+      to={card.to}
+    />
+  ))}
+</div>
+    </div>
+  </section>
+
+</main>
+      </div>
 
       <Footer />
     </>
-  )
+  );
 }
