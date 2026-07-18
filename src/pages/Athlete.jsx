@@ -36,12 +36,9 @@ console.log("Sending:", athlete);
 try {
     await registerAthlete(athlete);
 
-    alert("Successful registration!");
-
     setFormData(initialFormData);
 
 } catch (error) {
-    alert("Error with registration!");
 
     console.log("STATUS:", error.response?.status);
     console.log("DATA:", JSON.stringify(error.response?.data, null, 2));

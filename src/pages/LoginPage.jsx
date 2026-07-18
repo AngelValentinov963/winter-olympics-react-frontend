@@ -1,14 +1,27 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+import { login } from "../auth/authApi.js";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ email: "", password: "" })
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ username: "", password: "" })
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // UI only: no authentication.
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const tokens = await login(form.username, form.password);
+
+    localStorage.setItem("access_token", tokens.access_token);
+    localStorage.setItem("refresh_token", tokens.refresh_token);
+
+    navigate("/athlete");
+  } catch (error) {
+    alert("Invalid email or password.");
   }
+};
 
   return (
     <main className="flex min-h-[calc(100vh-70px)] items-center justify-center px-6 py-12">
@@ -25,15 +38,15 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-card-foreground">
-              Email
+            <label htmlFor="username" className="mb-1.5 block text-sm font-medium text-card-foreground">
+              Username
             </label>
             <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              value={form.email}
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={form.username}
               onChange={handleChange}
               required
               className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"

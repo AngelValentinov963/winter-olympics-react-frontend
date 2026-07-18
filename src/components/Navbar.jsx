@@ -1,19 +1,25 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo_color.svg";
+import { getUserFromToken } from "../auth/tokenUtils";
 
 export default function Navbar() {
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  const user = getUserFromToken();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    navigate("/login");
+  };
+
 
   return (
-    <nav
-      className="
-        sticky top-0 z-50
-        h-[70px]
-        bg-card
-        shadow-sm
-      "
-    >
+    <nav className="sticky top-0 z-50 h-[70px] bg-card shadow-sm">
+
       <div className="relative mx-auto flex h-full max-w-7xl items-center px-6 md:px-10">
+
         {/* Left */}
         <Link
           to="/"
@@ -27,33 +33,29 @@ export default function Navbar() {
           <span>Winter Olympics</span>
         </Link>
 
+
         {/* Center */}
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-8">
-          <NavLink
-            to="/competitions"
-            className="transition hover:text-primary"
-          >
+
+          <NavLink to="/competitions">
             Competitions
           </NavLink>
 
-          <NavLink
-            to="/rankings"
-            className="transition hover:text-primary"
-          >
+          <NavLink to="/rankings">
             Rankings
           </NavLink>
 
-          <NavLink
-            to="/statistics"
-            className="transition hover:text-primary"
-          >
+          <NavLink to="/statistics">
             Statistics
           </NavLink>
+
         </div>
+
 
         {/* Right */}
         <div className="ml-auto flex items-center gap-4">
-          {user?.role === "ATHLETE" && (
+
+          {user?.roles.includes("athlete") && (
             <NavLink
               to="/athlete"
               className="rounded-lg bg-primary px-5 py-2 font-medium text-white"
@@ -62,13 +64,25 @@ export default function Navbar() {
             </NavLink>
           )}
 
-          <Link
-            to="/login"
-            className="rounded-lg bg-primary px-5 py-2 font-medium text-white hover:opacity-90"
-          >
-            Login
-          </Link>
+
+          {user ? (
+            <button
+              onClick={logout}
+              className="rounded-lg bg-primary px-5 py-2 font-medium text-white hover:opacity-90"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="rounded-lg bg-primary px-5 py-2 font-medium text-white hover:opacity-90"
+            >
+              Login
+            </Link>
+          )}
+
         </div>
+
       </div>
     </nav>
   );

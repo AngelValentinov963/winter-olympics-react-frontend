@@ -6,6 +6,7 @@ import Rankings from "./pages/Rankings.jsx"
 import Statistics from "./pages/Statistics.jsx"
 import Athlete from "./pages/RegisterAthlete.jsx"
 import LoginPage from "./pages/LoginPage.jsx"
+import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
 export default function App() {
   return (
@@ -17,7 +18,11 @@ export default function App() {
           <Route path="/competitions" element={<Competitions />} />
           <Route path="/rankings" element={<Rankings />} />
           <Route path="/statistics" element={<Statistics />} />
-          <Route path="/athlete" element={<Athlete />} />
+          <Route path="/athlete" element={
+            <ProtectedRoute>
+              <Athlete />
+            </ProtectedRoute>
+            } />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
