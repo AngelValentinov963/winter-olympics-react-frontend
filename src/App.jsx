@@ -8,6 +8,7 @@ import Athlete from "./pages/RegisterAthlete.jsx"
 import LoginPage from "./pages/LoginPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import RegisterUserPage from "./pages/RegisterUserPage.jsx"
+import AthletePage from "./pages/AthletePage.jsx"
 
 export default function App() {
   return (
@@ -25,6 +26,12 @@ export default function App() {
               <Athlete />
             </ProtectedRoute>
             } />
+          <Route path="/athlete/:id" element={
+          <ProtectedRoute>
+            <AthletePage/>
+          </ProtectedRoute>
+          
+          }/>
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
